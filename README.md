@@ -3,12 +3,14 @@ first-telegram-bot
 https://monsterdeveloper.gitbooks.io/writing-telegram-bots-on-java/content/chapter1.html
 
 
+https://habr.com/post/393249/ Коллекция Telegram ботов для гиков
 https://habr.com/sandbox/111328/
 
 https://habr.com/post/418905/
 https://habr.com/post/304328/ Telegram bot и PostGIS
 https://habr.com/post/317280/ расписание пар в университете
 https://habr.com/post/335886/ кнопки
+https://habr.com/company/spottle/blog/303528/ служба поддержки
 
 https://medium.com/@giuliomichelon/how-to-build-a-telegram-bot-to-suggest-you-pizza-e83f07dea1fb
 
