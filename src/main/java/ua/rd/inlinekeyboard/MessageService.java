@@ -10,15 +10,15 @@ import java.util.List;
 
 public class MessageService {
 
-    public static final String HELP_COMMAND_TEXT = "Use commands: \n/help \n/start \n/hello \nor just print any phrase";
-    public static final String HELLO_COMMAND_TEXT = "Hello, world! This is simple bot!";
+    private static final String HELP_COMMAND_TEXT = "Use commands: \n/help \n/start \n/hello \nor just print any phrase";
+    private static final String HELLO_COMMAND_TEXT = "Hello, world! This is simple bot!";
 
-    public static final String BUTTON_1_TEXT = "Button 1";
-    public static final String BUTTON_2_TEXT = "Button 2";
-    public static final String BUTTON_3_TEXT = "Help";
+    private static final String BUTTON_1_TEXT = "Button 1";
+    private static final String BUTTON_2_TEXT = "Button 2";
+    private static final String BUTTON_3_TEXT = "Help";
 
-    public static final String BUTTON_1_DATA = "Button \"Button 1\" has been pressed";
-    public static final String BUTTON_2_DATA = "Button \"Button 2\" has been pressed";
+    private static final String BUTTON_1_DATA = "Button \"Button 1\" has been pressed";
+    private static final String BUTTON_2_DATA = "Button \"Button 2\" has been pressed";
 
     public SendMessage generateMessage(Update update) {
         String inputMessage = update.getMessage().getText();
@@ -59,6 +59,7 @@ public class MessageService {
         inlineKeyboardButton1.setCallbackData(BUTTON_1_DATA);
         inlineKeyboardButton2.setText(BUTTON_2_TEXT);
         inlineKeyboardButton2.setCallbackData(BUTTON_2_DATA);
+        inlineKeyboardButton2.setUrl("https://www.google.com");
 
         inlineKeyboardButton3.setText(BUTTON_3_TEXT);
         inlineKeyboardButton3.setCallbackData(HELP_COMMAND_TEXT);

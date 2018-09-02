@@ -6,10 +6,21 @@ https://monsterdeveloper.gitbooks.io/writing-telegram-bots-on-java/content/chapt
 https://habr.com/sandbox/111328/
 
 https://habr.com/post/418905/
+https://habr.com/post/304328/ Telegram bot и PostGIS
+https://habr.com/post/317280/ расписание пар в университете
+https://habr.com/post/335886/ кнопки
 
 https://medium.com/@giuliomichelon/how-to-build-a-telegram-bot-to-suggest-you-pizza-e83f07dea1fb
 
 
 https://github.com/rubenlagus/TelegramBots/releases/
+https://github.com/rubenlagus/TelegramBots/wiki/Getting-Started
+https://github.com/rubenlagus/TelegramBots
+https://github.com/rubenlagus/TelegramBotsExample
 
 https://core.telegram.org/bots
+
+
+Написать бот  таск менеджер с разными досками, задачи на сегодня, беклог
+Разобраться с ботом читающим почту и умеющим авторизоваться на сайтах. Открывать сайты с помошью бота
+попробовать отослать сообщение не себе а другому пользователю
