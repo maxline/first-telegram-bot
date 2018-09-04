@@ -4,10 +4,17 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ua.rd.yodabot.service.TaskService;
 
 public class YodaBot extends TelegramLongPollingBot {
 
-    MessageService messageService = new MessageService();
+    MessageService messageService;
+    TaskService taskService;
+
+    public YodaBot(TaskService taskService, MessageService messageService) {
+        this.taskService = taskService;
+        this.messageService = messageService;
+    }
 
     public void onUpdateReceived(Update update) {
         // We check if the update has a message and the message has text
@@ -19,17 +26,13 @@ public class YodaBot extends TelegramLongPollingBot {
     }
 
     private void processMessage(Update update) {
-
         if (update.getMessage().hasText()) {
             executeMessage(messageService.generateMessage(update));
         }
     }
 
-    private void processCallback(Update update) {
-
-        executeMessage(new SendMessage().setText(
-                update.getCallbackQuery().getData())
-                .setChatId(update.getCallbackQuery().getMessage().getChatId()));
+    private void processCallback(Update update) { //TODO refactor combine 2 to 1 method
+        executeMessage(messageService.generateCallbackMessage(update));
     }
 
     private void executeMessage(SendMessage message) {

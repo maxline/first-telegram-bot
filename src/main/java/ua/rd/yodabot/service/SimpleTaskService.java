@@ -1,7 +1,6 @@
 package ua.rd.yodabot.service;
 
 import ua.rd.yodabot.domain.Task;
-import ua.rd.yodabot.repo.InMemoryTaskRepository;
 import ua.rd.yodabot.repo.TaskRepository;
 
 import javax.annotation.Nonnull;
@@ -10,7 +9,7 @@ import java.util.Collection;
 
 public class SimpleTaskService implements TaskService {
 
-    private TaskRepository taskRepository = new InMemoryTaskRepository();
+    private TaskRepository taskRepository;
 
     public SimpleTaskService() {
     }

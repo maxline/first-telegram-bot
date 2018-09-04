@@ -4,7 +4,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ua.rd.yodabot.service.SimpleTaskService;
+import ua.rd.yodabot.domain.Task;
+import ua.rd.yodabot.service.TaskService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,14 @@ public class MessageService {
     private static final String BUTTON_2_TEXT = "Button 2";
     private static final String BUTTON_3_TEXT = "Help";
 
-    private static final String BUTTON_1_DATA = "Button \"Button 1\" has been pressed";
+    private static final String BUTTON_1_DATA = "/all";
     private static final String BUTTON_2_DATA = "Button \"Button 2\" has been pressed";
 
-    private SimpleTaskService taskService = new SimpleTaskService();
+    private TaskService taskService;
+
+    public MessageService(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     public SendMessage generateMessage(Update update) {
         String inputMessage = update.getMessage().getText();
@@ -58,32 +63,53 @@ public class MessageService {
         String button1Data = "Task{id=1, description=Открыть окно 1234567890,,ddd}";
         System.out.println(button1Data);
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
-        InlineKeyboardButton inlineKeyboardButton3 = new InlineKeyboardButton();
+        InlineKeyboardButton button1 = new InlineKeyboardButton();
+        InlineKeyboardButton button2 = new InlineKeyboardButton();
+        InlineKeyboardButton button3 = new InlineKeyboardButton();
 
-        inlineKeyboardButton1.setText(BUTTON_1_TEXT);
-        inlineKeyboardButton1.setCallbackData(button1Data);
-        //inlineKeyboardButton1.setCallbackData(taskService.getById(1L).toString()); //TODO doesn't work because of length limit
-        inlineKeyboardButton2.setText(BUTTON_2_TEXT);
-        inlineKeyboardButton2.setCallbackData(BUTTON_2_DATA);
-        inlineKeyboardButton2.setUrl("https://www.google.com");
+        button1.setText(BUTTON_1_TEXT);
+        button1.setCallbackData(BUTTON_1_DATA);
+        //button1.setCallbackData(taskService.getById(1L).toString()); //TODO doesn't work because of length limit
+        button2.setText(BUTTON_2_TEXT);
+        button2.setCallbackData(BUTTON_2_DATA);
+        button2.setUrl("https://www.google.com");
 
-        inlineKeyboardButton3.setText(BUTTON_3_TEXT);
-        inlineKeyboardButton3.setCallbackData(HELP_COMMAND_TEXT);
+        button3.setText(BUTTON_3_TEXT);
+        button3.setCallbackData(HELP_COMMAND_TEXT);
 
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<InlineKeyboardButton>();
-        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<InlineKeyboardButton>();
+        List<InlineKeyboardButton> row1 = new ArrayList<InlineKeyboardButton>();
+        List<InlineKeyboardButton> row2 = new ArrayList<InlineKeyboardButton>();
 
-        keyboardButtonsRow1.add(inlineKeyboardButton1);
-        keyboardButtonsRow1.add(inlineKeyboardButton2);
-        keyboardButtonsRow2.add(inlineKeyboardButton3);
+        row1.add(button1);
+        row1.add(button2);
+        row2.add(button3);
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<List<InlineKeyboardButton>>();
-        rowList.add(keyboardButtonsRow1);
-        rowList.add(keyboardButtonsRow2);
+        rowList.add(row1);
+        rowList.add(row2);
+        inlineKeyboardMarkup.setKeyboard(rowList);
         inlineKeyboardMarkup.setKeyboard(rowList);
 
         return new SendMessage().setChatId(chatId).setText("Buttons example").setReplyMarkup(inlineKeyboardMarkup);
+    }
+
+    public SendMessage generateCallbackMessage(Update update){
+
+        String updatedData = update.getCallbackQuery().getData();
+
+        String updatedText ="";
+        if (updatedData.equals("/all")){
+            //long id = Integer.valueOf(update.getCallbackQuery().getData());
+
+            for(Task task:taskService.getAll()){
+                updatedText+= task.getDescription() + "\n";
+            }
+        } else {
+            updatedText = updatedData;
+        }
+
+        return new SendMessage().setText(
+                updatedText)
+                .setChatId(update.getCallbackQuery().getMessage().getChatId());
     }
 }
