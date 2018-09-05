@@ -4,6 +4,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ua.rd.yodabot.service.MessageService;
 import ua.rd.yodabot.service.TaskService;
 
 public class YodaBot extends TelegramLongPollingBot {

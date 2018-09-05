@@ -13,6 +13,7 @@ import java.util.Map;
 public class InMemoryTaskRepository implements TaskRepository {
 
     private final Map<Long, Task> tasks = new HashMap<>();
+    private long lastId;
 
     public InMemoryTaskRepository() {
         init();
@@ -20,10 +21,10 @@ public class InMemoryTaskRepository implements TaskRepository {
 
     @PostConstruct
     private void init() {
-        tasks.put(1L, new Task(1L, "Открыть окно", "Backlog"));
-        tasks.put(2L, new Task(2L, "Зарядить телефон", "Backlog"));
-        tasks.put(3L, new Task(3L, "Лечь спать", "Backlog"));
-        tasks.put(4L, new Task(3L, "Сделать ДЗ", "InProgress"));
+        save(new Task(null, "Открыть окно", "Backlog")); // TODO move to property file
+        save(new Task(null, "Зарядить телефон", "Backlog"));
+        save(new Task(null, "Лечь спать", "Backlog"));
+        save(new Task(null, "Сделать ДЗ", "InProgress"));
     }
 
     @Nullable
@@ -35,8 +36,15 @@ public class InMemoryTaskRepository implements TaskRepository {
     @Override
     public boolean save(@Nonnull Task task) {
         //put - replace existing task or add new task
+        task.setId(validateTaskId(task) ? task.getId() : getLastId() + 1);
+
         tasks.put(task.getId(), task);
+        setLastId(getLastId() > task.getId() ? getLastId() : task.getId());
         return true;
+    }
+
+    private boolean validateTaskId(@Nonnull Task task) {
+        return task.getId()!= null && task.getId() > 0;
     }
 
     @Override
@@ -48,5 +56,13 @@ public class InMemoryTaskRepository implements TaskRepository {
     @Override
     public Task getById(@Nonnull Long id) {
         return tasks.get(id);
+    }
+
+    public long getLastId() {
+        return lastId;
+    }
+
+    public void setLastId(long lastId) {
+        this.lastId = lastId;
     }
 }

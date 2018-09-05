@@ -47,4 +47,11 @@ public class SimpleTaskService implements TaskService {
     public void setTaskRepository(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
+
+    @Override
+    public Task add(@Nonnull String description) {
+        Task task = new Task(null, description, ""); //TODO add listName
+        taskRepository.save(task);
+        return task;
+    }
 }

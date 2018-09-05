@@ -1,4 +1,4 @@
-package ua.rd.yodabot;
+package ua.rd.yodabot.service;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -17,6 +17,7 @@ public class MessageService {
     private static final String HELLO_COMMAND_TEXT = "Hello, world! This is simple bot!";
 
     private static final String BUTTON_1_TEXT = "All";
+    private static final String BUTTON_ADD_TEXT = "Add";
     private static final String BUTTON_2_TEXT = "Button 2";
     private static final String BUTTON_3_TEXT = "Help";
 
@@ -33,23 +34,24 @@ public class MessageService {
         String inputMessage = update.getMessage().getText();
         long chat_id = update.getMessage().getChatId();
 
-        String outputMessage;
-        SendMessage message;
+        String textMessage;
+        SendMessage sendMessage;
 
         if (inputMessage.equals("/help")) {
-            outputMessage = HELP_COMMAND_TEXT;
-            message = createTextMessage(chat_id, outputMessage);
+            textMessage = HELP_COMMAND_TEXT;
+            sendMessage = createTextMessage(chat_id, textMessage);
         } else if (inputMessage.equals("/hello")) {
-            outputMessage = HELLO_COMMAND_TEXT;
-            message = createTextMessage(chat_id, outputMessage);
+            textMessage = HELLO_COMMAND_TEXT;
+            sendMessage = createTextMessage(chat_id, textMessage);
         } else if (inputMessage.equals("/buttons")) {
-            message = createInlineKeyBoardMessage(chat_id);
+            sendMessage = createInlineKeyBoardMessage(chat_id);
         } else {
-            outputMessage = inputMessage + " 11111";
-            message = createTextMessage(chat_id, outputMessage);
+            taskService.add(inputMessage);
+            textMessage = inputMessage + " - added";
+            sendMessage = createTextMessage(chat_id, textMessage);
         }
 
-        return message;
+        return sendMessage;
     }
 
     private SendMessage createTextMessage(long chat_id, String newMessage) {
@@ -66,6 +68,7 @@ public class MessageService {
         InlineKeyboardButton button1 = new InlineKeyboardButton();
         InlineKeyboardButton button2 = new InlineKeyboardButton();
         InlineKeyboardButton button3 = new InlineKeyboardButton();
+        InlineKeyboardButton buttonAdd = new InlineKeyboardButton();
 
         button1.setText(BUTTON_1_TEXT);
         button1.setCallbackData(BUTTON_1_DATA);
@@ -76,15 +79,18 @@ public class MessageService {
 
         button3.setText(BUTTON_3_TEXT);
         button3.setCallbackData(HELP_COMMAND_TEXT);
+        buttonAdd.setText(BUTTON_ADD_TEXT);
+        buttonAdd.setCallbackData("111");
 
-        List<InlineKeyboardButton> row1 = new ArrayList<InlineKeyboardButton>();
-        List<InlineKeyboardButton> row2 = new ArrayList<InlineKeyboardButton>();
+        List<InlineKeyboardButton> row1 = new ArrayList<>();
+        List<InlineKeyboardButton> row2 = new ArrayList<>();
 
         row1.add(button1);
+        row1.add(buttonAdd);
         row1.add(button2);
         row2.add(button3);
 
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<List<InlineKeyboardButton>>();
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(row1);
         rowList.add(row2);
         inlineKeyboardMarkup.setKeyboard(rowList);

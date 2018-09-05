@@ -4,6 +4,7 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ua.rd.yodabot.repo.InMemoryTaskRepository;
+import ua.rd.yodabot.service.MessageService;
 import ua.rd.yodabot.service.SimpleTaskService;
 import ua.rd.yodabot.service.TaskService;
 

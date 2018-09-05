@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class InlineKeyboardBot extends TelegramLongPollingBot {
 
-    MessageService messageService = new MessageService();
+    InlineMessageService inlineMessageService = new InlineMessageService();
 
     public void onUpdateReceived(Update update) {
         // We check if the update has a message and the message has text
@@ -21,7 +21,7 @@ public class InlineKeyboardBot extends TelegramLongPollingBot {
     private void processMessage(Update update) {
 
         if (update.getMessage().hasText()) {
-            executeMessage(messageService.generateMessage(update));
+            executeMessage(inlineMessageService.generateMessage(update));
         }
     }
 

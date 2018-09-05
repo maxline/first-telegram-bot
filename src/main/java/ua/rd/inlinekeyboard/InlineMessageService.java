@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageService {
+public class InlineMessageService {
 
     private static final String HELP_COMMAND_TEXT = "Use commands: \n/help \n/start \n/hello \nor just print any phrase";
     private static final String HELLO_COMMAND_TEXT = "Hello, world! This is simple bot!";
