@@ -12,6 +12,6 @@ public interface TaskRepository {
     @Nullable
     List<Task> getAll();
 
-    boolean save(@Nonnull Task task);
+    Task save(@Nonnull Task task);
     boolean removeById(@Nonnull Long id);
 }

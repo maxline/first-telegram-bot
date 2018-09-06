@@ -11,8 +11,8 @@ public class SimpleTaskService implements TaskService {
 
     private TaskRepository taskRepository;
 
-    public SimpleTaskService() {
-    }
+//    public SimpleTaskService() {
+//    }
 
     public SimpleTaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
@@ -26,7 +26,7 @@ public class SimpleTaskService implements TaskService {
 
     @Override
     public Task save(@Nonnull Task task) {
-        return taskRepository.save(task) ? task : null;
+        return taskRepository.save(task);
     }
 
     @Override
@@ -51,7 +51,6 @@ public class SimpleTaskService implements TaskService {
     @Override
     public Task add(@Nonnull String description) {
         Task task = new Task(null, description, ""); //TODO add listName
-        taskRepository.save(task);
-        return task;
+        return taskRepository.save(task);
     }
 }

@@ -34,13 +34,14 @@ public class InMemoryTaskRepository implements TaskRepository {
     }
 
     @Override
-    public boolean save(@Nonnull Task task) {
+    public Task save(@Nonnull Task taskParam) {
         //put - replace existing task or add new task
+        Task task = (Task) taskParam.clone();
         task.setId(validateTaskId(task) ? task.getId() : getLastId() + 1);
 
         tasks.put(task.getId(), task);
         setLastId(getLastId() > task.getId() ? getLastId() : task.getId());
-        return true;
+        return task;
     }
 
     private boolean validateTaskId(@Nonnull Task task) {

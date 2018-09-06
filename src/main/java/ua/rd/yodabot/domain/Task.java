@@ -1,7 +1,7 @@
 package ua.rd.yodabot.domain;
 
 
-public class Task extends DomainObject {
+public class Task extends DomainObject implements Cloneable{
 
     private String description;
     private String listName;
@@ -38,14 +38,30 @@ public class Task extends DomainObject {
         return getId().intValue();
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Task task = (Task) o;
+//
+//        return task.getId().equals(getId());
+//    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Task)) return false;
 
         Task task = (Task) o;
+        if (getId() != task.getId()) {
+            return false;
+        }
 
-        return task.getId().equals(getId());
+        if (!getDescription().equals(task.getDescription())) return false;
+        return getListName().equals(task.getListName());
+
     }
 
     @Override
@@ -55,5 +71,14 @@ public class Task extends DomainObject {
                 ", description='" + description + '\'' +
                 ", listName='" + listName + '\'' +
                 '}';
+    }
+
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
