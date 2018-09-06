@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MessageService {
 
-    //TODO create dinamivally updated help commands list
+    //TODO create dynamically updated help commands list
     private static final String HELP_COMMAND_TEXT = "Use commands: \n/help \n/buttons \n/hello \nor just print any phrase";
     private static final String HELLO_COMMAND_TEXT = "Hello, world! This is simple bot!";
 
